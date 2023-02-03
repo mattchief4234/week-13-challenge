@@ -3,7 +3,7 @@ const { Tag, Product, ProductTag } = require('../../models');
 
 // The `/api/tags` endpoint
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   // find all tags
   // be sure to include its associated Product data
   try {
@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.put('/:id', async(req, res) => {
+router.put('/:id', async (req, res) => {
   // update a tag's name by its `id` value\
   try {
     const tadData = await Tag.update(req.body, {
@@ -62,8 +62,9 @@ router.delete('/:id', async (req, res) => {
         id: req.params.id
       }
     });
-    id (!idData) {
+    if (!tagData ) {
       res.status(404).json({ message: 'No Tag found with this ID!'})
+      return;
     }
 
     res.status(200).json(tagData);
